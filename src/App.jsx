@@ -1,7 +1,15 @@
 import React from 'react';
 
+import Home from './pages/Home';
+import GlobalStyle from './styles/global';
+
 function App() {
-  return <h1>Rick and Morty App</h1>;
+  return (
+    <>
+      <Home />
+      <GlobalStyle />
+    </>
+  );
 }
 
 export default App;
