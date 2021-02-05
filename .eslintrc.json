@@ -31,9 +31,6 @@
         "js": "never",
         "jsx": "never"
       }
-    ],
-    "settings": {
-      "import/resolver": "webpack"
-    }
+    ]
   }
 }
