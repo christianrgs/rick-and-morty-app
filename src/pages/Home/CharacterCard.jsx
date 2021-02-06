@@ -8,18 +8,20 @@ function CharacterCard(props) {
 
   return (
     <CharacterCardWrapper isDead={character.status === 'Dead'}>
-      <img src={character.image} alt={character.name} />
-      <div>
-        <strong>{character.name}</strong>
-        <span>{character.species}</span>
-      </div>
+      <button type="button" aria-label={character.name} onClick={() => {}}>
+        <img src={character.image} alt={character.name} />
+        <div>
+          <strong>{character.name}</strong>
+          <span>{character.species}</span>
+        </div>
+      </button>
     </CharacterCardWrapper>
   );
 }
 
 CharacterCard.propTypes = {
   character: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,

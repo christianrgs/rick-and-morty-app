@@ -22,6 +22,10 @@ export const Form = styled.form`
     background: transparent;
     font-weight: bold;
 
+    &:focus {
+      border-color: #cbd736;
+    }
+
     &::placeholder {
       color: #9f9f9f;
     }
@@ -37,6 +41,10 @@ export const Form = styled.form`
     background: transparent;
     font-weight: bold;
     transition: background-color 0.2s;
+
+    :focus {
+      border-color: #cbd736;
+    }
   }
 `;
 
@@ -45,6 +53,7 @@ export const LoadingWrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
+  z-index: 5;
   width: 100vw;
   height: 100vh;
   left: 0px;
@@ -91,14 +100,8 @@ export const CharactersList = styled.ul`
 export const CharacterCardWrapper = styled.li`
   width: 224px;
   height: 224px;
-  position: relative;
-  overflow: hidden;
   font-family: 'Seravek';
   margin-bottom: 24px;
-  border: 2px solid #606060;
-  box-sizing: border-box;
-  border-radius: 8px;
-  transition: border 0.4s, box-shadow 0.4s;
 
   ${(props) =>
     props.isDead &&
@@ -108,45 +111,122 @@ export const CharacterCardWrapper = styled.li`
       }
     `}
 
-  &:hover {
-    border: 2px solid #cbd736;
-    box-shadow: 0px 6px 7px rgba(203, 215, 54, 0.25);
+  button {
+    position: relative;
+    border: 2px solid #606060;
+    box-sizing: border-box;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border 0.4s, box-shadow 0.4s;
+
+    &:focus {
+      border-color: #cbd736;
+      box-shadow: 0px 6px 7px rgba(203, 215, 54, 0.25);
+    }
+
+    &:hover {
+      border-color: #cbd736;
+      box-shadow: 0px 6px 7px rgba(203, 215, 54, 0.25);
+
+      img {
+        filter: grayscale(0%);
+      }
+    }
 
     img {
-      filter: grayscale(0%);
-    }
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    transition: filter 0.4s;
-  }
-
-  div {
-    width: 100%;
-    height: 54px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 7px 10px 10px 13px;
-    background-color: rgba(27, 27, 27, 0.8);
-    backdrop-filter: blur(23px);
-
-    strong {
       display: block;
-      font-size: 20px;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      width: 100%;
+      height: auto;
+      transition: filter 0.4s;
     }
 
-    span {
-      display: block;
-      font-size: 12px;
-      color: #ffffff;
+    div {
+      width: 100%;
+      height: 54px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      padding: 7px 10px 10px 13px;
+      background-color: rgba(27, 27, 27, 0.8);
+      backdrop-filter: blur(23px);
+
+      strong {
+        display: block;
+        font-size: 20px;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      span {
+        display: block;
+        font-size: 12px;
+        color: #ffffff;
+      }
     }
   }
+`;
+
+export const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 77px;
+
+  ul {
+    li {
+      display: inline-block;
+
+      & + li {
+        margin-left: 51px;
+      }
+    }
+  }
+`;
+
+export const PaginationButton = styled.button`
+  font-size: 20px;
+  color: #606060;
+  background: transparent;
+  border: none;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+      color: #cbd736;
+    `}
+`;
+
+export const ArrowButton = styled.button`
+  border: none;
+  background: transparent;
+  margin-left: 48px;
+
+  &:first-child {
+    margin-left: 0px;
+    margin-right: 48px;
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  svg {
+    display: inline-block;
+    vertical-align: sub;
+  }
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+
+      svg {
+        path {
+          stroke: #606060;
+        }
+      }
+    `}
 `;
