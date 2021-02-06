@@ -29,6 +29,11 @@ module.exports = {
           loader: 'file-loader',
         },
       },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
+      },
     ],
   },
   resolve: {

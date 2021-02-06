@@ -1,11 +1,36 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import { debounce } from 'lodash';
 
+import CharacterCard from './CharacterCard';
+
+import GET_CHARACTERS from '../../graphql/queries/characters.gql';
 import logo from '../../assets/logo.svg';
+import loadingCard from '../../assets/loading-card.svg';
 
-import { LogoWrapper, Form, CharactersList } from './styles';
+import { LogoWrapper, Form, LoadingWrapper, CharactersList } from './styles';
 
 function Home() {
   const [inputValue, setInputValue] = useState('');
+  const [loadCharacters, query] = useLazyQuery(GET_CHARACTERS);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const delayedQuery = useCallback(
+    debounce(
+      (value) => loadCharacters({ variables: { page: 1, name: value } }),
+      500,
+    ),
+    [],
+  );
+
+  const characters = useMemo(() => query?.data?.characters?.results ?? [], [
+    query,
+  ]);
+
+  const onChange = (event) => {
+    setInputValue(event.target.value);
+    delayedQuery(event.target.value);
+  };
 
   return (
     <>
@@ -16,21 +41,23 @@ function Home() {
         <input
           placeholder="Search caracters"
           value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
+          onChange={onChange}
         />
         <button type="submit">Search</button>
       </Form>
-      <CharactersList>
-        <li>
-          <img
-            src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-            alt="Rick Sanchez"
-          />
+      {query.loading && (
+        <LoadingWrapper>
           <div>
-            <strong>Rick Sanchez</strong>
-            <span>Human</span>
+            <img src={loadingCard} alt="loading card" />
+            <span>Loading</span>
           </div>
-        </li>
+        </LoadingWrapper>
+      )}
+      <CharactersList>
+        {!!characters.length &&
+          characters.map((character) => (
+            <CharacterCard key={character.id} character={character} />
+          ))}
       </CharactersList>
     </>
   );
