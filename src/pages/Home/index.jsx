@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import logo from '../../assets/logo.svg';
 
-import { LogoWrapper, Form } from './styles';
+import { LogoWrapper, Form, CharactersList } from './styles';
 
 function Home() {
   const [inputValue, setInputValue] = useState('');
@@ -20,6 +20,18 @@ function Home() {
         />
         <button type="submit">Search</button>
       </Form>
+      <CharactersList>
+        <li>
+          <img
+            src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+            alt="Rick Sanchez"
+          />
+          <div>
+            <strong>Rick Sanchez</strong>
+            <span>Human</span>
+          </div>
+        </li>
+      </CharactersList>
     </>
   );
 }
