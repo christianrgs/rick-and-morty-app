@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
+import useViewport from '../../hooks/useViewPort';
 import CharacterCard from './CharacterCard';
 
 import GET_CHARACTERS from '../../graphql/queries/characters.gql';
@@ -21,6 +22,8 @@ import {
 function Home() {
   const [inputValue, setInputValue] = useState('');
   const [page, setPage] = useState(1);
+  const { isMobile } = useViewport();
+
   const [loadCharacters, query] = useLazyQuery(GET_CHARACTERS, {
     notifyOnNetworkStatusChange: true,
   });
@@ -30,28 +33,23 @@ function Home() {
     [query],
   );
 
-  const characters = useMemo(() => query?.data?.characters?.results ?? [], [
-    query,
-  ]);
+  const { characters, previousPage, nextPage, totalPages } = useMemo(
+    () => ({
+      characters: query?.data?.characters?.results ?? [],
+      previousPage: query?.data?.characters?.info?.prev ?? 0,
+      nextPage: query?.data?.characters?.info?.next ?? 0,
+      totalPages: query?.data?.characters?.info?.pages ?? 0,
+    }),
+    [query],
+  );
 
-  const previousPage = useMemo(() => query?.data?.characters?.info?.prev ?? 0, [
-    query,
-  ]);
-
-  const nextPage = useMemo(() => query?.data?.characters?.info?.next ?? 0, [
-    query,
-  ]);
-
-  const totalPages = useMemo(() => query?.data?.characters?.info?.pages ?? 0, [
-    query,
-  ]);
-
-  const pages = useMemo(() => {
-    const maxSlice = totalPages - 5;
-    const initialSlice = previousPage > maxSlice ? maxSlice : previousPage;
-    const nextSlice = (nextPage || totalPages) + 3;
-
+  const pagination = useMemo(() => {
     if (totalPages) {
+      const maxSlice = isMobile ? 1 : totalPages - 5;
+      const initialSlice =
+        !isMobile && previousPage > maxSlice ? maxSlice : previousPage;
+      const nextSlice = isMobile ? page : (nextPage || totalPages) + 3;
+
       const showPageOptions = Array(totalPages)
         .fill(1)
         .map((_, index) => index + 1)
@@ -61,7 +59,7 @@ function Home() {
     }
 
     return [];
-  }, [nextPage, previousPage, totalPages]);
+  }, [isMobile, totalPages, previousPage, page, nextPage]);
 
   const handleSearch = useCallback(
     (name, pageParam) => {
@@ -121,26 +119,28 @@ function Home() {
           </div>
         </LoadingWrapper>
       )}
-      <CharactersList role="navigation">
+      <CharactersList>
         {!!characters.length &&
           characters.map((character) => (
             <CharacterCard key={character.id} character={character} />
           ))}
       </CharactersList>
-      {!!pages.length && (
+      {!!pagination.length && (
         <PaginationWrapper>
           <ArrowButton
             type="button"
+            aria-label="Previous page"
             disabled={!previousPage}
             onClick={() => paginateWithArrow('prev')}
           >
             <Arrow />
           </ArrowButton>
           <ul>
-            {pages.map((pageOption) => (
+            {pagination.map((pageOption) => (
               <li key={`pagination-item-${pageOption}`}>
                 <PaginationButton
                   type="button"
+                  aria-label={`Page ${pageOption}`}
                   disabled={page === pageOption}
                   onClick={() => handlePaginate(pageOption)}
                 >
@@ -151,6 +151,7 @@ function Home() {
           </ul>
           <ArrowButton
             type="button"
+            aria-label="Next page"
             disabled={page >= totalPages}
             onClick={() => paginateWithArrow('next')}
           >

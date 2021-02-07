@@ -2,15 +2,24 @@ import styled, { css } from 'styled-components';
 
 export const LogoWrapper = styled.div`
   img {
+    width: 240px;
     margin: 0 auto;
     display: block;
+
+    @media (min-width: 500px) {
+      width: auto;
+    }
   }
 `;
 
 export const Form = styled.form`
   display: flex;
   justify-content: center;
-  margin-top: 74px;
+  margin-top: 47px;
+
+  @media (min-width: 768px) {
+    margin-top: 74px;
+  }
 
   input {
     width: 196px;
@@ -90,18 +99,28 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const CharactersList = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 24px;
   list-style: none;
-  margin-top: 101px;
+  margin-top: 47px;
+
+  @media (min-width: 481px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 101px;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 export const CharacterCardWrapper = styled.li`
-  width: 224px;
-  height: 224px;
   font-family: 'Seravek';
-  margin-bottom: 24px;
 
   ${(props) =>
     props.isDead &&
@@ -112,7 +131,9 @@ export const CharacterCardWrapper = styled.li`
     `}
 
   button {
+    display: block;
     position: relative;
+    margin: 0 auto;
     border: 2px solid #606060;
     box-sizing: border-box;
     border-radius: 8px;
