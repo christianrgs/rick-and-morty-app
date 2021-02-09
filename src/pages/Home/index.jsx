@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import useViewport from '../../hooks/useViewPort';
@@ -8,7 +8,7 @@ import Modal from './Modal';
 import GET_CHARACTERS from '../../graphql/queries/characters.gql';
 import logo from '../../assets/logo.svg';
 import loadingCard from '../../assets/loading-card.svg';
-import Arrow from '../../assets/arrow';
+import Arrow from '../../assets/Arrow';
 
 import {
   LogoWrapper,

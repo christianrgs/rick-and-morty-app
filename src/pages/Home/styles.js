@@ -257,13 +257,14 @@ export const ArrowButton = styled.button`
 export const ModalWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   position: fixed;
   z-index: 5;
   width: 100vw;
   height: 100vh;
   left: 0px;
   top: 0px;
+  padding: 0 13px 14px 12px;
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
@@ -276,10 +277,19 @@ export const ModalWrapper = styled.div`
       visibility: visible;
     `}
 
+  @media (min-width: 1024px) {
+    align-items: center;
+    padding: 0 15px 0 100px;
+  }
+
+  @media (min-width: 1300px) {
+    padding: 0;
+  }
+
   main {
     display: flex;
-    width: 1034px;
-    height: 799px;
+    width: 100%;
+    height: calc(100% - 150px);
     border: 1px solid #161616;
     box-sizing: border-box;
     background: #000000;
@@ -287,41 +297,79 @@ export const ModalWrapper = styled.div`
     border-radius: 16px;
     transform: ${(props) => (props.isOpen ? 'scale(1)' : 'scale(0)')};
     transition: transform 0.5s;
+    flex-direction: column;
+    padding-bottom: 20px;
+
+    @media (min-width: 1024px) {
+      width: 1034px;
+      height: 799px;
+      flex-direction: row;
+      padding-bottom: 0;
+    }
 
     section {
       &.left {
-        position: relative;
-        width: 389px;
+        width: 100%;
+        height: 59px;
+        margin-bottom: 59px;
 
         div.glass-wrapper {
           height: 100%;
           width: 100%;
           overflow: hidden;
-          border-radius: 16px 0 0 16px;
+          border-radius: 16px 16px 0 0;
         }
 
         button {
           position: absolute;
-          left: 20px;
-          top: 20px;
+          left: 0;
+          top: -130px;
           color: #ffffff;
           background: transparent;
-          border: 2px solid #ffffff;
+          border: 0;
           box-sizing: border-box;
           border-radius: 8px;
           padding: 10px 22px;
+          font-size: 0;
+        }
+
+        @media (min-width: 768px) {
+          height: 150px;
+        }
+
+        @media (min-width: 1024px) {
+          position: relative;
+          width: 389px;
+          height: 100%;
+          margin-bottom: 0;
+
+          div.glass-wrapper {
+            border-radius: 16px 0 0 16px;
+          }
+
+          button {
+            left: 20px;
+            top: 20px;
+            border: 2px solid #ffffff;
+            font-size: 16px;
+
+            svg {
+              display: none;
+            }
+          }
         }
       }
 
       &.right {
         flex: 1;
-        padding: 71px 75px 0 71px;
+        padding: 0 28px 0 21px;
+        overflow-y: auto;
 
         article {
-          margin-bottom: 63px;
+          margin-bottom: 41px;
 
           & + article {
-            margin-bottom: 56px;
+            margin-bottom: 43px;
 
             h4 {
               margin-bottom: 17px;
@@ -337,17 +385,17 @@ export const ModalWrapper = styled.div`
           }
 
           h5 {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: normal;
             color: #ffffff;
             text-transform: capitalize;
           }
 
           h6 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: normal;
             color: #d3d3d3;
-            margin-bottom: 12px;
+            margin-bottom: 7px;
           }
 
           p {
@@ -356,10 +404,12 @@ export const ModalWrapper = styled.div`
           }
 
           span {
-            font-size: 14px;
+            font-size: 12px;
             color: #8c8c8c;
 
             &:last-of-type {
+              font-size: 14px;
+
               &::before {
                 content: '';
                 display: inline-block;
@@ -371,6 +421,35 @@ export const ModalWrapper = styled.div`
             }
           }
         }
+
+        @media (min-width: 768px) {
+          padding: 50px 75px 0 71px;
+
+          article {
+            margin-bottom: 63px;
+
+            & + article {
+              margin-bottom: 56px;
+            }
+
+            h5 {
+              font-size: 28px;
+            }
+
+            h6 {
+              font-size: 18px;
+              margin-bottom: 12px;
+            }
+
+            span {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      @media (min-width: 1024px) {
+        padding-top: 71px;
       }
     }
   }
@@ -381,7 +460,6 @@ export const ImageBackground = styled.div`
   width: 100%;
   background: ${(props) => `#000000 url(${props.url}) no-repeat center`};
   background-size: cover;
-  border-radius: 16px 0 0 16px;
   filter: blur(25px);
 
   &::before {
@@ -398,22 +476,22 @@ export const CharacterCardModal = styled.div`
   font-family: 'Seravek';
   display: block;
   position: absolute;
-  width: 401px;
-  height: 653px;
-  top: 83px;
-  left: -77px;
+  width: 178px;
+  height: 173px;
+  top: -85px;
+  left: 50%;
   border: 2px solid #606060;
   box-sizing: border-box;
   border-radius: 8px;
   overflow: hidden;
+  transform: translateX(-50%);
 
   img {
     position: absolute;
-    width: auto;
+    width: 100%;
     height: auto;
-    height: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 35%;
+    transform: translateY(-50%);
   }
 
   div {
@@ -438,6 +516,27 @@ export const CharacterCardModal = styled.div`
       display: block;
       font-size: 12px;
       color: #ffffff;
+    }
+  }
+
+  @media (min-width: 768px) {
+    width: 300px;
+    height: 300px;
+  }
+
+  @media (min-width: 1024px) {
+    width: 401px;
+    height: 653px;
+    top: 83px;
+    left: -77px;
+    transform: none;
+
+    img {
+      width: auto;
+      height: 100%;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 `;

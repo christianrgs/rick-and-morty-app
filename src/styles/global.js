@@ -10,6 +10,11 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html.has-no-scroll {
+    overflow: hidden;
+    height: 100%;
+  }
+
   body {
     background: #1E1E1E url(${homeBackground}) no-repeat 50% top;
     -webkit-font-smootthing: antialiased;

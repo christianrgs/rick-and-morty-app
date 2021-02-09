@@ -1,13 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
 import useModalCharacterInfos from '../../hooks/useModalCharacterInfos';
 
+import CloseIcon from '../../assets/CloseIcon';
 import { ModalWrapper, ImageBackground, CharacterCardModal } from './styles';
 
 function Modal(props) {
   const { isOpen, character, handleCloseModal } = props;
+
+  const html = document.querySelector('html');
   const modalRoot = document.getElementById('modal-root');
 
   const {
@@ -19,6 +22,14 @@ function Modal(props) {
   const getPlanetOrDimensionText = useCallback(({ type, text }) => {
     return !text || text === 'unknown' ? `Unknown ${type}` : text;
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      html.classList.add('has-no-scroll');
+    } else if (html.classList.contains('has-no-scroll')) {
+      html.classList.remove('has-no-scroll');
+    }
+  }, [isOpen, html]);
 
   const renderLocalContent = useCallback(
     (localType, amountOfResidents) => {
@@ -50,12 +61,11 @@ function Modal(props) {
         <section className="left">
           <div className="glass-wrapper">
             {!!character?.image && <ImageBackground url={character?.image} />}
-            {/* <div className="glass"> */}
           </div>
           <button type="button" onClick={() => handleCloseModal()}>
+            <CloseIcon />
             Close
           </button>
-          {/* </div> */}
           <CharacterCardModal>
             {!!character?.image && (
               <img src={character?.image} alt={character?.name} />
