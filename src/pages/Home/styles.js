@@ -303,12 +303,9 @@ export const ModalWrapper = styled.div`
     @media (min-width: 1024px) {
       width: 1034px;
       height: 100%;
+      max-height: 799px;
       flex-direction: row;
       padding-bottom: 0;
-    }
-
-    @media (min-width: 1024px) and (min-height: 1000px) {
-      height: 799px;
     }
 
     section {
