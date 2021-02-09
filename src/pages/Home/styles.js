@@ -268,7 +268,7 @@ export const ModalWrapper = styled.div`
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
+  transition: opacity 0.3s ease-in, visibility 0.3s ease-in;
 
   ${(props) =>
     props.isOpen &&
@@ -279,10 +279,10 @@ export const ModalWrapper = styled.div`
 
   @media (min-width: 1024px) {
     align-items: center;
-    padding: 0 15px 0 100px;
+    padding: 20px 15px 20px 100px;
   }
 
-  @media (min-width: 1300px) {
+  @media (min-width: 1300px) and (min-height: 1000px) {
     padding: 0;
   }
 
@@ -296,15 +296,19 @@ export const ModalWrapper = styled.div`
     filter: drop-shadow(0px 4px 79px #000000);
     border-radius: 16px;
     transform: ${(props) => (props.isOpen ? 'scale(1)' : 'scale(0)')};
-    transition: transform 0.5s;
+    transition: transform 0.3s;
     flex-direction: column;
     padding-bottom: 20px;
 
     @media (min-width: 1024px) {
       width: 1034px;
-      height: 799px;
+      height: 100%;
       flex-direction: row;
       padding-bottom: 0;
+    }
+
+    @media (min-width: 1024px) and (min-height: 1000px) {
+      height: 799px;
     }
 
     section {
@@ -342,6 +346,7 @@ export const ModalWrapper = styled.div`
           width: 389px;
           height: 100%;
           margin-bottom: 0;
+          padding-top: 0;
 
           div.glass-wrapper {
             border-radius: 16px 0 0 16px;
@@ -526,7 +531,7 @@ export const CharacterCardModal = styled.div`
 
   @media (min-width: 1024px) {
     width: 401px;
-    height: 653px;
+    height: calc(100% - 144px);
     top: 83px;
     left: -77px;
     transform: none;
