@@ -3,6 +3,7 @@ import { useLazyQuery } from '@apollo/client';
 
 import useViewport from '../../hooks/useViewPort';
 import CharacterCard from './CharacterCard';
+import Modal from './Modal';
 
 import GET_CHARACTERS from '../../graphql/queries/characters.gql';
 import logo from '../../assets/logo.svg';
@@ -22,6 +23,9 @@ import {
 function Home() {
   const [inputValue, setInputValue] = useState('');
   const [page, setPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalCharacter, setModalCharacter] = useState(null);
+
   const { isMobile } = useViewport();
 
   const [loadCharacters, query] = useLazyQuery(GET_CHARACTERS, {
@@ -45,7 +49,8 @@ function Home() {
 
   const pagination = useMemo(() => {
     if (totalPages) {
-      const maxSlice = isMobile ? 1 : totalPages - 5;
+      const maxSliceDesktop = totalPages > 5 ? totalPages - 5 : 0;
+      const maxSlice = isMobile ? 1 : maxSliceDesktop;
       const initialSlice =
         !isMobile && previousPage > maxSlice ? maxSlice : previousPage;
       const nextSlice = isMobile ? page : (nextPage || totalPages) + 3;
@@ -68,34 +73,53 @@ function Home() {
     [loadCharacters],
   );
 
-  const onChange = (event) => {
+  const onChange = useCallback((event) => {
     setInputValue(event.target.value);
-  };
+  }, []);
 
-  const handlePaginate = (newPage) => {
-    setPage(newPage);
-    query.refetch({ ...query.variables, page: newPage });
+  const handlePaginate = useCallback(
+    (newPage) => {
+      setPage(newPage);
+      query.refetch({ ...query.variables, page: newPage });
 
-    window.scrollTo(0, 0);
-  };
+      window.scrollTo(0, 0);
+    },
+    [query],
+  );
 
-  const paginateWithArrow = (type) => {
-    const newPage = type === 'prev' ? previousPage : nextPage;
+  const paginateWithArrow = useCallback(
+    (type) => {
+      const newPage = type === 'prev' ? previousPage : nextPage;
 
-    handlePaginate(newPage);
-  };
+      handlePaginate(newPage);
+    },
+    [previousPage, nextPage, handlePaginate],
+  );
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
 
-    if (inputValue.length) {
-      if (page > 1) {
-        setPage(1);
+      if (inputValue.length) {
+        if (page > 1) {
+          setPage(1);
+        }
+
+        handleSearch(inputValue, 1);
       }
+    },
+    [inputValue, page, setPage, handleSearch],
+  );
 
-      handleSearch(inputValue, 1);
-    }
-  };
+  const handleOpenModal = useCallback((character) => {
+    setModalCharacter(character);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setModalCharacter(null);
+    setIsModalOpen(false);
+  }, []);
 
   return (
     <>
@@ -122,9 +146,18 @@ function Home() {
       <CharactersList>
         {!!characters.length &&
           characters.map((character) => (
-            <CharacterCard key={character.id} character={character} />
+            <CharacterCard
+              key={character.id}
+              character={character}
+              handleOpenModal={handleOpenModal}
+            />
           ))}
       </CharactersList>
+      <Modal
+        isOpen={isModalOpen}
+        character={modalCharacter}
+        handleCloseModal={handleCloseModal}
+      />
       {!!pagination.length && (
         <PaginationWrapper>
           <ArrowButton

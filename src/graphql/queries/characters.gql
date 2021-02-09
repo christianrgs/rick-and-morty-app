@@ -1,7 +1,6 @@
 query getCharacters($page: Int, $name: String) {
   characters(page: $page, filter: { name: $name }) {
     info {
-      count
       pages
       next
       prev
@@ -11,34 +10,27 @@ query getCharacters($page: Int, $name: String) {
       name
       status
       species
-      type
       gender
       origin {
-        id
         name
         type
         dimension
         residents {
           id
         }
-        created
       }
       location {
-        id
         name
         type
         dimension
-        created
+        residents {
+          id
+        }
       }
       image
       episode {
-        id
-        name
         air_date
-        episode
-        created
       }
-      created
     }
   }
 }

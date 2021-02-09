@@ -4,11 +4,15 @@ import PropTypes from 'prop-types';
 import { CharacterCardWrapper } from './styles';
 
 function CharacterCard(props) {
-  const { character } = props;
+  const { character, handleOpenModal } = props;
 
   return (
     <CharacterCardWrapper isDead={character.status === 'Dead'}>
-      <button type="button" aria-label={character.name} onClick={() => {}}>
+      <button
+        type="button"
+        aria-label={character.name}
+        onClick={() => handleOpenModal(character)}
+      >
         <img src={character.image} alt={character.name} />
         <div>
           <strong>{character.name}</strong>
@@ -27,6 +31,7 @@ CharacterCard.propTypes = {
     image: PropTypes.string.isRequired,
     species: PropTypes.string.isRequired,
   }).isRequired,
+  handleOpenModal: PropTypes.func.isRequired,
 };
 
 export default CharacterCard;

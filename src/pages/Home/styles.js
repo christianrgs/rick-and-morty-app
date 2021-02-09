@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import residentsIcon from '../../assets/residents-icon.svg';
+
 export const LogoWrapper = styled.div`
   img {
     width: 240px;
@@ -250,4 +252,192 @@ export const ArrowButton = styled.button`
         }
       }
     `}
+`;
+
+export const ModalWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+  left: 0px;
+  top: 0px;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in, visibility 0.5s ease-in;
+
+  ${(props) =>
+    props.isOpen &&
+    css`
+      opacity: 1;
+      visibility: visible;
+    `}
+
+  main {
+    display: flex;
+    width: 1034px;
+    height: 799px;
+    border: 1px solid #161616;
+    box-sizing: border-box;
+    background: #000000;
+    filter: drop-shadow(0px 4px 79px #000000);
+    border-radius: 16px;
+    transform: ${(props) => (props.isOpen ? 'scale(1)' : 'scale(0)')};
+    transition: transform 0.5s;
+
+    section {
+      &.left {
+        position: relative;
+        width: 389px;
+
+        div.glass-wrapper {
+          height: 100%;
+          width: 100%;
+          overflow: hidden;
+          border-radius: 16px 0 0 16px;
+        }
+
+        button {
+          position: absolute;
+          left: 20px;
+          top: 20px;
+          color: #ffffff;
+          background: transparent;
+          border: 2px solid #ffffff;
+          box-sizing: border-box;
+          border-radius: 8px;
+          padding: 10px 22px;
+        }
+      }
+
+      &.right {
+        flex: 1;
+        padding: 71px 75px 0 71px;
+
+        article {
+          margin-bottom: 63px;
+
+          & + article {
+            margin-bottom: 56px;
+
+            h4 {
+              margin-bottom: 17px;
+            }
+          }
+
+          h4 {
+            font-size: 13px;
+            letter-spacing: 0.65em;
+            font-weight: normal;
+            color: #cbd736;
+            margin-bottom: 9px;
+          }
+
+          h5 {
+            font-size: 28px;
+            font-weight: normal;
+            color: #ffffff;
+            text-transform: capitalize;
+          }
+
+          h6 {
+            font-size: 18px;
+            font-weight: normal;
+            color: #d3d3d3;
+            margin-bottom: 12px;
+          }
+
+          p {
+            font-size: 16px;
+            color: #d3d3d3;
+          }
+
+          span {
+            font-size: 14px;
+            color: #8c8c8c;
+
+            &:last-of-type {
+              &::before {
+                content: '';
+                display: inline-block;
+                background: url(${residentsIcon}) no-repeat;
+                width: 12px;
+                height: 10px;
+                margin-right: 11px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const ImageBackground = styled.div`
+  height: 100%;
+  width: 100%;
+  background: ${(props) => `#000000 url(${props.url}) no-repeat center`};
+  background-size: cover;
+  border-radius: 16px 0 0 16px;
+  filter: blur(25px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+  }
+`;
+
+export const CharacterCardModal = styled.div`
+  font-family: 'Seravek';
+  display: block;
+  position: absolute;
+  width: 401px;
+  height: 653px;
+  top: 83px;
+  left: -77px;
+  border: 2px solid #606060;
+  box-sizing: border-box;
+  border-radius: 8px;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: auto;
+    height: auto;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  div {
+    width: 100%;
+    height: 54px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 7px 10px 10px 13px;
+    background: #1b1b1b;
+
+    strong {
+      display: block;
+      font-size: 20px;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+      color: #ffffff;
+    }
+  }
 `;
