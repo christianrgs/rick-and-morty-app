@@ -1,11 +1,11 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/react-hooks';
 
 import useViewport from '../../hooks/useViewPort';
 import CharactersList from '../CharactersList';
 import Pagination from '../Pagination';
 
-import GET_CHARACTERS from '../../graphql/queries/characters.gql';
+import CHARACTERS_QUERY from '../../graphql/queries/characters';
 import logo from '../../assets/logo.svg';
 import loadingCard from '../../assets/loading-card.svg';
 
@@ -17,7 +17,7 @@ function Home() {
 
   const { isMobile } = useViewport();
 
-  const [loadCharacters, query] = useLazyQuery(GET_CHARACTERS, {
+  const [loadCharacters, query] = useLazyQuery(CHARACTERS_QUERY, {
     notifyOnNetworkStatusChange: true,
   });
 

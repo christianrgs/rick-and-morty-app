@@ -10,8 +10,9 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.8",
+    "@apollo/react-hooks": "^4.0.0",
     "graphql": "^15.5.0",
+    "graphql-tag": "^2.11.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -35,7 +36,6 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4",
     "file-loader": "^6.2.0",
-    "graphql-tag": "^2.11.0",
     "prettier": "^2.2.1",
     "style-loader": "^2.0.0",
     "webpack": "^5.20.2",
