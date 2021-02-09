@@ -48,7 +48,12 @@ function Modal(props) {
               text: character?.[localType]?.dimension,
             })}
           </h6>
-          {!!amountOfResidents && <span>{amountOfResidents} residents </span>}
+          {!!amountOfResidents && (
+            <span>
+              {amountOfResidents}{' '}
+              {amountOfResidents > 1 ? 'residents' : 'resident'}
+            </span>
+          )}
         </>
       );
     },
@@ -121,7 +126,7 @@ Modal.propTypes = {
         dimension: PropTypes.string,
         residents: PropTypes.arrayOf(
           PropTypes.shape({
-            id: PropTypes.string.isRequired,
+            id: PropTypes.string,
           }),
         ),
       }).isRequired,
@@ -131,7 +136,7 @@ Modal.propTypes = {
         dimension: PropTypes.string,
         residents: PropTypes.arrayOf(
           PropTypes.shape({
-            id: PropTypes.string.isRequired,
+            id: PropTypes.string,
           }),
         ),
       }).isRequired,
