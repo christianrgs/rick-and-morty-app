@@ -96,8 +96,9 @@ function Home() {
       <LogoWrapper>
         <img src={logo} alt="Rick and Morty logo" />
       </LogoWrapper>
-      <Form onSubmit={onSubmit}>
+      <Form data-testid="form-search-characters" onSubmit={onSubmit}>
         <input
+          data-testid="input-search-characters"
           aria-label="Search caracters"
           placeholder="Search caracters"
           value={inputValue}

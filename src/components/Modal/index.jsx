@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
@@ -8,7 +8,7 @@ import CloseIcon from '../../assets/CloseIcon';
 import { ModalWrapper, ImageBackground, CharacterCardModal } from './styles';
 
 function Modal(props) {
-  const { isOpen, character, handleCloseModal } = props;
+  const { isOpen, character, setModalCharacter, setIsModalOpen } = props;
 
   const html = document.querySelector('html');
   const modalRoot = document.getElementById('modal-root');
@@ -22,14 +22,6 @@ function Modal(props) {
   const getPlanetOrDimensionText = useCallback(({ type, text }) => {
     return !text || text === 'unknown' ? `Unknown ${type}` : text;
   }, []);
-
-  useEffect(() => {
-    if (isOpen) {
-      html.classList.add('has-no-scroll');
-    } else if (html.classList.contains('has-no-scroll')) {
-      html.classList.remove('has-no-scroll');
-    }
-  }, [isOpen, html]);
 
   const renderLocalContent = useCallback(
     (localType, amountOfResidents) => {
@@ -60,14 +52,28 @@ function Modal(props) {
     [character, getPlanetOrDimensionText],
   );
 
+  const handleCloseModal = useCallback(() => {
+    setModalCharacter(null);
+    setIsModalOpen(false);
+
+    html.classList.remove('has-no-scroll');
+  }, [html.classList, setIsModalOpen, setModalCharacter]);
+
   return createPortal(
-    <ModalWrapper isOpen={isOpen}>
+    <ModalWrapper
+      data-testid={isOpen ? `modal-${character?.id}` : 'modal-closed'}
+      isOpen={isOpen}
+    >
       <main>
         <section className="left">
           <div className="glass-wrapper">
             {!!character?.image && <ImageBackground url={character?.image} />}
           </div>
-          <button type="button" onClick={() => handleCloseModal()}>
+          <button
+            data-testid="modal-close-button"
+            type="button"
+            onClick={() => handleCloseModal()}
+          >
             <CloseIcon />
             Close
           </button>
@@ -143,7 +149,8 @@ Modal.propTypes = {
     }),
     PropTypes.oneOf([null]).isRequired,
   ]),
-  handleCloseModal: PropTypes.func.isRequired,
+  setModalCharacter: PropTypes.func.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
 };
 
 export default Modal;

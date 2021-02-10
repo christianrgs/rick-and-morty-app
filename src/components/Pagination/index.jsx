@@ -25,6 +25,7 @@ function Pagination(props) {
     return (
       <PaginationWrapper>
         <ArrowButton
+          data-testid="paginate-button-previous"
           type="button"
           aria-label="Previous page"
           disabled={!previousPage}
@@ -36,6 +37,7 @@ function Pagination(props) {
           {pagination.map((pageOption) => (
             <li key={`pagination-item-${pageOption}`}>
               <PaginationButton
+                data-testid={`paginate-button-${pageOption}`}
                 type="button"
                 aria-label={`Page ${pageOption}`}
                 disabled={page === pageOption}
@@ -47,6 +49,7 @@ function Pagination(props) {
           ))}
         </ul>
         <ArrowButton
+          data-testid="paginate-button-next"
           type="button"
           aria-label="Next page"
           disabled={page >= totalPages}

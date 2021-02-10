@@ -11,20 +11,22 @@ function CharactersList(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalCharacter, setModalCharacter] = useState(null);
 
-  const handleOpenModal = useCallback((character) => {
-    setModalCharacter(character);
-    setIsModalOpen(true);
-  }, []);
+  const html = document.querySelector('html');
 
-  const handleCloseModal = useCallback(() => {
-    setModalCharacter(null);
-    setIsModalOpen(false);
-  }, []);
+  const handleOpenModal = useCallback(
+    (character) => {
+      setModalCharacter(character);
+      setIsModalOpen(true);
+
+      html.classList.add('has-no-scroll');
+    },
+    [html.classList],
+  );
 
   if (characters.length) {
     return (
       <>
-        <CharactersListWrapper>
+        <CharactersListWrapper data-testid="characters-list">
           {characters.map((character) => (
             <CharacterCard
               key={character.id}
@@ -36,7 +38,8 @@ function CharactersList(props) {
         <Modal
           isOpen={isModalOpen}
           character={modalCharacter}
-          handleCloseModal={handleCloseModal}
+          setModalCharacter={setModalCharacter}
+          setIsModalOpen={setIsModalOpen}
         />
       </>
     );

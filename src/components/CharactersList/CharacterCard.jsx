@@ -7,9 +7,13 @@ function CharacterCard(props) {
   const { character, handleOpenModal } = props;
 
   return (
-    <CharacterCardWrapper isDead={character.status === 'Dead'}>
+    <CharacterCardWrapper
+      data-testid={`card-${character?.id}`}
+      isDead={character.status === 'Dead'}
+    >
       <button
         type="button"
+        data-testid={`card-${character?.id}-button`}
         aria-label={character.name}
         onClick={() => handleOpenModal(character)}
       >
