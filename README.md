@@ -2,6 +2,8 @@
 
 A single page application made with React that uses Rick and Morty API
 
+![CI/CD](https://github.com/christianrg3/rick-and-morty-app/workflows/CI/CD/badge.svg) [![Codecov](https://img.shields.io/codecov/c/github/christianrg3/rick-and-morty-app)](https://codecov.io/gh/christianrg3/rick-and-morty-app) ![License](https://img.shields.io/github/license/christianrg3/rick-and-morty-app)
+
 ### Development
 
 #### Commands
