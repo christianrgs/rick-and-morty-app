@@ -2,6 +2,7 @@
   "name": "rick-and-morty-app",
   "version": "1.0.0",
   "main": "./src/index.js",
+  "homepage": "https://christianrg3.github.io/rick-and-morty-app",
   "repository": "git@github.com:christianrg3/rick-and-morty-app.git",
   "author": "Christian Gonçalves <christiangoncalvesr@gmail.com>",
   "license": "MIT",
@@ -11,10 +12,13 @@
     "test": "jest",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "ci": "start-server-and-test dev 8080 cy:run"
+    "ci": "start-server-and-test dev 8080 cy:run",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
+    "gh-pages": "^3.1.0",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
     "prop-types": "^15.7.2",
