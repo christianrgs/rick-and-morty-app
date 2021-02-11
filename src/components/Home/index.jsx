@@ -107,9 +107,13 @@ function Home() {
         <button type="submit">Search</button>
       </Form>
       {isLoading && (
-        <LoadingWrapper>
+        <LoadingWrapper data-testid="loading-wrapper">
           <div>
-            <img src={loadingCard} alt="loading card" />
+            <img
+              data-testid="loading-image"
+              src={loadingCard}
+              alt="loading card"
+            />
             <span>Loading</span>
           </div>
         </LoadingWrapper>
