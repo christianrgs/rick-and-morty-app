@@ -7,6 +7,8 @@
 # testing
 /coverage
 __snapshots__
+cypress/videos
+cypress/screenshots
 
 # production
 /build
