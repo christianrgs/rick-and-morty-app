@@ -81,4 +81,26 @@ describe('Home component', () => {
       return expect(cardOfMorty).toBeTruthy();
     });
   });
+
+  test('should be to render empty result text after a query with no results', async () => {
+    render(<div id="modal-root" />);
+
+    render(
+      <MockedProvider mocks={charactersQueryMock} addTypename={false}>
+        <Home />
+      </MockedProvider>,
+    );
+
+    const input = screen.getByTestId('input-search-characters');
+    const form = screen.getByTestId('form-search-characters');
+
+    userEvent.type(input, 'rock');
+    fireEvent.submit(form);
+
+    await waitFor(() => {
+      const charactersList = screen.getByTestId('empty-result-text');
+
+      return expect(charactersList.children.length).toBeTruthy();
+    });
+  });
 });

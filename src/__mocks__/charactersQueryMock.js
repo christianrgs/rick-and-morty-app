@@ -297,6 +297,43 @@ const mock = [
       },
     },
   },
+  {
+    request: {
+      query: CHARACTERS_QUERY,
+      variables: {
+        name: 'rock',
+        page: 1,
+      },
+    },
+    result: {
+      errors: [
+        {
+          message: '404: Not Found',
+          locations: [
+            {
+              line: 2,
+              column: 3,
+            },
+          ],
+          path: ['characters'],
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+            response: {
+              url: 'http://localhost:8080/api/character/?name=rock&page=1',
+              status: 404,
+              statusText: 'Not Found',
+              body: {
+                error: 'There is nothing here',
+              },
+            },
+          },
+        },
+      ],
+      data: {
+        characters: null,
+      },
+    },
+  },
 ];
 
 export default mock;

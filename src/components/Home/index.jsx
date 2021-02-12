@@ -107,7 +107,7 @@ function Home() {
         <button type="submit">Search</button>
       </Form>
       {query.called && !characters.length && (
-        <EmptyResultText>
+        <EmptyResultText data-testid="empty-result-text">
           No results found for: <strong>{query.variables.name}</strong>
         </EmptyResultText>
       )}

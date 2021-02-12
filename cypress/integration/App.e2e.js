@@ -13,6 +13,40 @@ describe('App E2E', () => {
     ).should('be.visible');
   });
 
+  it('should be to render empty result text after a query with no results', () => {
+    cy.get('input[data-testid=input-search-characters]').type('rock');
+
+    cy.get('button[type=submit]').click();
+
+    cy.get('p[data-testid=empty-result-text] > strong').should('be.visible');
+
+    cy.get('p[data-testid=empty-result-text]').should(
+      'have.css',
+      'color',
+      'rgb(255, 255, 255)',
+    );
+
+    cy.get('p[data-testid=empty-result-text] > strong').should(
+      'have.css',
+      'color',
+      'rgb(203, 215, 54)',
+    );
+  });
+
+  it('should not render an empty result text after redoing a query with no results', () => {
+    cy.get('input[data-testid=input-search-characters]').type('rock');
+
+    cy.get('button[type=submit]').click();
+
+    cy.get('p[data-testid=empty-result-text] > strong').should('be.visible');
+
+    cy.get('input[data-testid=input-search-characters]').clear().type('summer');
+
+    cy.get('button[type=submit]').click();
+
+    cy.get('p[data-testid=empty-result-text] > strong').should('not.exist');
+  });
+
   it('should be render character list after query', () => {
     cy.get('input[data-testid=input-search-characters]').type('rick');
 
