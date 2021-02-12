@@ -57,6 +57,17 @@ export const Form = styled.form`
   }
 `;
 
+export const EmptyResultText = styled.p`
+  font-size: 18px;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 50px;
+
+  strong {
+    color: #cbd736;
+  }
+`;
+
 export const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;

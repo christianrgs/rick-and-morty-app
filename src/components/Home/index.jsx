@@ -1,15 +1,15 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, Suspense } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 
 import useViewport from '../../hooks/useViewPort';
-import CharactersList from '../CharactersList';
-import Pagination from '../Pagination';
-
 import CHARACTERS_QUERY from '../../graphql/queries/characters';
 import logo from '../../assets/logo.svg';
 import loadingCard from '../../assets/loading-card.svg';
 
-import { LogoWrapper, Form, LoadingWrapper } from './styles';
+import { LogoWrapper, Form, LoadingWrapper, EmptyResultText } from './styles';
+
+const CharactersList = React.lazy(() => import('../CharactersList'));
+const Pagination = React.lazy(() => import('../Pagination'));
 
 function Home() {
   const [inputValue, setInputValue] = useState('');
@@ -106,6 +106,11 @@ function Home() {
         />
         <button type="submit">Search</button>
       </Form>
+      {query.called && !characters.length && (
+        <EmptyResultText>
+          No results found for: <strong>{query.variables.name}</strong>
+        </EmptyResultText>
+      )}
       {isLoading && (
         <LoadingWrapper data-testid="loading-wrapper">
           <div>
@@ -118,12 +123,14 @@ function Home() {
           </div>
         </LoadingWrapper>
       )}
-      <CharactersList characters={characters} />
-      <Pagination
-        pagination={pagination}
-        handlePaginate={handlePaginate}
-        pagesInfo={{ previousPage, nextPage, page, totalPages }}
-      />
+      <Suspense fallback={<></>}>
+        <CharactersList characters={characters} />
+        <Pagination
+          pagination={pagination}
+          handlePaginate={handlePaginate}
+          pagesInfo={{ previousPage, nextPage, page, totalPages }}
+        />
+      </Suspense>
     </>
   );
 }
