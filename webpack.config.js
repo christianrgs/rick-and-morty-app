@@ -3,7 +3,7 @@ const path = require('path');
 
 // eslint-disable-next-line func-names
 module.exports = function (webpackEnv) {
-  const isEnvDevelopment = webpackEnv === 'development';
+  const isEnvDevelopment = Boolean(webpackEnv.WEBPACK_SERVE);
 
   return {
     entry: path.resolve(__dirname, 'src', 'index.js'),
@@ -11,10 +11,15 @@ module.exports = function (webpackEnv) {
       path: isEnvDevelopment
         ? path.resolve(__dirname, 'public')
         : path.resolve(__dirname, 'build'),
-      filename: 'bundle.js',
+      filename: '[name]-[fullhash].js',
     },
     devServer: {
       contentBase: path.resolve(__dirname, 'public'),
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
     },
     devtool: 'source-map',
     module: {
