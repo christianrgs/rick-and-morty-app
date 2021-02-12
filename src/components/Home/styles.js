@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const LogoWrapper = styled.div`
   img {
@@ -80,6 +80,16 @@ export const LoadingWrapper = styled.div`
   top: 0px;
   background: rgba(30, 30, 30, 0.8);
   backdrop-filter: blur(23px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in, visibility 0.3s ease-in;
+
+  ${(props) =>
+    props.isOpen &&
+    css`
+      opacity: 1;
+      visibility: visible;
+    `}
 
   div {
     text-align: center;

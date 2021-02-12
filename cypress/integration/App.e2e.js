@@ -18,19 +18,19 @@ describe('App E2E', () => {
 
     cy.get('button[type=submit]').click();
 
-    cy.get('p[data-testid=empty-result-text] > strong').should('be.visible');
+    cy.get('p[data-testid=empty-result-text]')
+      .should('be.exist')
+      .then(($emptyResultText) => {
+        cy.wrap($emptyResultText).should(
+          'have.css',
+          'color',
+          'rgb(255, 255, 255)',
+        );
 
-    cy.get('p[data-testid=empty-result-text]').should(
-      'have.css',
-      'color',
-      'rgb(255, 255, 255)',
-    );
-
-    cy.get('p[data-testid=empty-result-text] > strong').should(
-      'have.css',
-      'color',
-      'rgb(203, 215, 54)',
-    );
+        cy.wrap($emptyResultText)
+          .children()
+          .should('have.css', 'color', 'rgb(203, 215, 54)');
+      });
   });
 
   it('should not render an empty result text after redoing a query with no results', () => {
@@ -38,7 +38,7 @@ describe('App E2E', () => {
 
     cy.get('button[type=submit]').click();
 
-    cy.get('p[data-testid=empty-result-text] > strong').should('be.visible');
+    cy.get('p[data-testid=empty-result-text] > strong').should('be.exist');
 
     cy.get('input[data-testid=input-search-characters]').clear().type('summer');
 

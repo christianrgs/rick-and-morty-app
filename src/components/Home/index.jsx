@@ -106,23 +106,21 @@ function Home() {
         />
         <button type="submit">Search</button>
       </Form>
-      {query.called && !characters.length && (
+      {query.called && !isLoading && !characters.length && (
         <EmptyResultText data-testid="empty-result-text">
           No results found for: <strong>{query.variables.name}</strong>
         </EmptyResultText>
       )}
-      {isLoading && (
-        <LoadingWrapper data-testid="loading-wrapper">
-          <div>
-            <img
-              data-testid="loading-image"
-              src={loadingCard}
-              alt="loading card"
-            />
-            <span>Loading</span>
-          </div>
-        </LoadingWrapper>
-      )}
+      <LoadingWrapper data-testid="loading-wrapper" isOpen={isLoading}>
+        <div>
+          <img
+            data-testid="loading-image"
+            src={loadingCard}
+            alt="loading card"
+          />
+          <span>Loading</span>
+        </div>
+      </LoadingWrapper>
       <Suspense fallback={<></>}>
         <CharactersList characters={characters} />
         <Pagination
